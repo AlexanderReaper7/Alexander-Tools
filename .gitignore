@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Include DLLs folder
-!DLLs\
+!DLLs\*.dll
 
 # User-specific files
 *.rsuser
