@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Alexander_tools.Xna
+namespace Alexander_XNA_Tools_UWP
 {
     /// <summary>
     ///     An object that can be used to depict a sprite in world space which can detect pixel level collisions with other
@@ -89,7 +89,7 @@ namespace Alexander_tools.Xna
         public Rectangle BoundingRectangle => CalculateBoundingRectangle(new Rectangle(0,0, SourceRectangle.Width, SourceRectangle.Height), Transform);
 
         /// <summary>
-        ///     A simple rectangle based on position, origin and source.
+        ///     A simple rectangle based on position, origin and source that does´nt rotate.
         /// </summary>
         public Rectangle SimpleRectangle => new Rectangle((int)(Position.X - Origin.X), (int)(Position.Y - Origin.Y), SourceRectangle.Width, SourceRectangle.Height);
 

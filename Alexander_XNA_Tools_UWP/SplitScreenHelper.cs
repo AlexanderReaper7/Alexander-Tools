@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Alexander_tools.Xna
+namespace Alexander_XNA_Tools_UWP
 {
     public static class SplitScreenHelper
     {

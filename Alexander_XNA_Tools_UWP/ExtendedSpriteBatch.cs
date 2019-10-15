@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Alexander_tools.Xna
+namespace Alexander_XNA_Tools_UWP
 {
     /// <summary>
     /// An extended version of the SpriteBatch class that supports line and
