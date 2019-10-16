@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Alexander_XNA_Tools_UWP
+namespace Tools_XNA_dotNET_Framework
 {
     /// <summary>
     /// Contains extension methods for the SpriteBatch class

@@ -1,4 +1,4 @@
-﻿namespace Alexander_XNA_Tools_UWP
+﻿namespace Tools_XNA_dotNET_Framework
 {
     public static class ArrayDimensionHelper
     {
