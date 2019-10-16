@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29403.142
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alexander_XNA_Tools_dotNET_Standard", "Alexander_XNA_Tools_dotNET_Standard\Alexander_XNA_Tools_dotNET_Standard.csproj", "{6B913B85-AAAC-44C7-8BD0-A3B43215D90C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B913B85-AAAC-44C7-8BD0-A3B43215D90C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B913B85-AAAC-44C7-8BD0-A3B43215D90C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B913B85-AAAC-44C7-8BD0-A3B43215D90C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B913B85-AAAC-44C7-8BD0-A3B43215D90C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8A862673-84A0-4C6D-999C-F7B6FBA0B474}
+	EndGlobalSection
+EndGlobal
