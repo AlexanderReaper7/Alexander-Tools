@@ -66,7 +66,7 @@ namespace Tools_XNA_dotNET_Framework
         /// <summary>
         /// the origin coordinate manipulated by the zoom factor
         /// </summary>
-        public Vector2 ZoomedOrigin => Origin / Zoom;
+        public Vector2 ZoomedOrigin => Origin * Zoom;
 
 
         public Camera2D(Game game)
@@ -78,20 +78,7 @@ namespace Tools_XNA_dotNET_Framework
             Rotation = 0f;
         }
 
-
-
-        /// <summary>
-        /// Returns the view matrix
-        /// </summary>
-        /// <returns></returns>
-        public Matrix GetViewMatrix()
-        {
-                return Matrix.CreateTranslation(new Vector3(-Position, 0.0f)) *
-                       Matrix.CreateTranslation(new Vector3(-Origin, 0.0f)) *
-                       Matrix.CreateRotationZ(Rotation) *
-                       Matrix.CreateScale(Zoom, Zoom, 1) *
-                       Matrix.CreateTranslation(new Vector3(Origin, 0.0f));
-        }
+        #region Parallax
 
         /// <summary>
         /// Returns the view matrix with translation scaled with parallax, to add no parallax set parallax to Vector.One
@@ -108,18 +95,6 @@ namespace Tools_XNA_dotNET_Framework
                    Matrix.CreateTranslation(new Vector3(Origin, 0.0f));
         }
 
-
-
-        /// <summary>
-        /// Transforms a Vector2 with the view matrix
-        /// </summary>
-        /// <param name="worldPosition"></param>
-        /// <returns></returns>
-        public Vector2 WorldToScreen(Vector2 worldPosition)
-        {
-            return Vector2.Transform(worldPosition, GetViewMatrix());
-        }
-
         /// <summary>
         /// Transforms a Vector2 with the view matrix and parallax scaling
         /// </summary>
@@ -129,16 +104,6 @@ namespace Tools_XNA_dotNET_Framework
         public Vector2 WorldToScreen(Vector2 worldPosition, Vector2 parallax)
         {
             return Vector2.Transform(worldPosition, GetViewMatrix(parallax));
-        }
-
-        /// <summary>
-        /// Transforms a Vector2 with the inverted view matrix
-        /// </summary>
-        /// <param name="screenPosition"></param>
-        /// <returns></returns>
-        public Vector2 ScreenToWorld(Vector2 screenPosition)
-        {
-            return Vector2.Transform(screenPosition, Matrix.Invert(GetViewMatrix()));
         }
 
         /// <summary>
@@ -153,9 +118,46 @@ namespace Tools_XNA_dotNET_Framework
         }
 
 
+        #endregion
+
+        /// <summary>
+        /// Returns the view matrix
+        /// </summary>
+        /// <returns></returns>
+        public Matrix GetViewMatrix()
+        {
+                return Matrix.CreateTranslation(new Vector3(-Position, 0.0f)) *
+                       Matrix.CreateTranslation(new Vector3(-Origin, 0.0f)) *
+                       Matrix.CreateRotationZ(Rotation) *
+                       Matrix.CreateScale(Zoom, Zoom, 1) *
+                       Matrix.CreateTranslation(new Vector3(Origin, 0.0f));
+        }
+
+        /// <summary>
+        /// Transforms a Vector2 with the view matrix
+        /// </summary>
+        /// <param name="worldPosition"></param>
+        /// <returns></returns>
+        public Vector2 WorldToScreen(Vector2 worldPosition)
+        {
+            return Vector2.Transform(worldPosition, GetViewMatrix());
+        }
+
+
+        /// <summary>
+        /// Transforms a Vector2 with the inverted view matrix
+        /// </summary>
+        /// <param name="screenPosition"></param>
+        /// <returns></returns>
+        public Vector2 ScreenToWorld(Vector2 screenPosition)
+        {
+            return Vector2.Transform(screenPosition, Matrix.Invert(GetViewMatrix()));
+        }
+
+
         public void LookAt(Vector2 position)
         {
-            Position = position - Origin;
+            Position = position - ZoomedOrigin;
         }
 
         public void LookAt(Point position)
@@ -165,12 +167,8 @@ namespace Tools_XNA_dotNET_Framework
 
         public void ZoomToMatchHeight(Rectangle rectangle)
         {
-            LookAt(rectangle.Location);
             // Scale zoom to fit location
             Zoom = (float) _game.Window.ClientBounds.Height / (float) rectangle.Height;
-            //if (CameraWorldRect.Location != rectangle.Location) throw new Exception();
-            //if (CameraWorldRect.Bottom != rectangle.Bottom) throw new Exception();
-            if (CameraWorldRect.Contains(rectangle)) throw new Exception();
         }
 
         public void ZoomToMatchWidth(Rectangle rectangle)

@@ -5,7 +5,11 @@ namespace Tools_XNA_dotNET_Framework
 {
     public static class ColorHelper
     {
+#pragma warning disable CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
+#pragma warning disable CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
         public struct HSV
+#pragma warning restore CS0661 
+#pragma warning restore CS0660 
         {
             public double H { get; set; }
 

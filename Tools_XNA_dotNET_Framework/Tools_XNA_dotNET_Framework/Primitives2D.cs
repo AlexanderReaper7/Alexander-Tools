@@ -508,19 +508,18 @@ namespace Tools_XNA_dotNET_Framework
         /// <param name="thickness">The thickness of the lines</param>
         public static void DrawGrid(this SpriteBatch spriteBatch, int squaresX, int squaresY, float squareSize, Vector2 position, Color color, float thickness = 1.0f)
         {
-            float bottom = squareSize * (squaresY + 1);
-            float right = squareSize * (squaresX + 1);
-
+            float bottom = squareSize * squaresY + position.Y;
+            float right = squareSize * squaresX + position.X;
 
             // Draw vertical lines
-            for (int i = 0; i < squaresX; i++)
+            for (int i = 0; i <= squaresX; i++)
             {
                 float x = squareSize * i + position.X;
                 spriteBatch.DrawLine(x, position.Y, x, bottom, color, thickness);
             }
 
             // Draw horizontal lines
-            for (int i = 0; i < squaresY; i++)
+            for (int i = 0; i <= squaresY; i++)
             {
                 float y = squareSize * i + position.Y;
                 spriteBatch.DrawLine(position.X, y, right, y, color, thickness);
