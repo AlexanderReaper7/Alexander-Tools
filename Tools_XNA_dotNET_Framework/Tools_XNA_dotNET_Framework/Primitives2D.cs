@@ -522,7 +522,7 @@ namespace Tools_XNA_dotNET_Framework
             for (int i = 0; i <= squaresY; i++)
             {
                 float y = squareSize * i + position.Y;
-                spriteBatch.DrawLine(position.X, y, right, y, color, thickness);
+                spriteBatch.DrawLine(position.X - thickness, y, right, y, color, thickness);
             }
         }
 

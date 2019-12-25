@@ -162,6 +162,17 @@ namespace Tools_XNA_dotNET_Framework
             return Math.Abs((float)(1 - Math.Abs(value % MathHelper.TwoPi) / Math.PI));
         }
 
+        public static Color ToXNAColor(this System.Drawing.Color color)
+        {
+            return new Color(color.R, color.G, color.B, color.A);
+        }
+
+        public static System.Drawing.Color ToSystemColor(this Color color)
+        {
+            return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+        }
+
+
         // TODO: Implement DeltaE color calculation methods, https://en.wikipedia.org/wiki/Color_difference#CIE76
     }
 }
