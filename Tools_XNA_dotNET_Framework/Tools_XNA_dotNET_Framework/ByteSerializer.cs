@@ -41,5 +41,11 @@ namespace Tools_XNA_dotNET_Framework
                 return obj;
             }
         }
+
+        /// <inheritdoc cref="ByteArrayToObject"/>
+        public static T ByteArrayToObject<T>(byte[] arrBytes)
+        {
+            return (T) ByteArrayToObject(arrBytes);
+        }
     }
 }
