@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -19,7 +20,7 @@ namespace Tools_XNA_dotNET_Framework
         #endregion
 
 
-        #region Create
+        #region Private Mzethods
 
         /// <summary>
         /// initializes the Texture2D pixel private Member with a single white pixel
@@ -42,7 +43,7 @@ namespace Tools_XNA_dotNET_Framework
         private static List<Vector2> CreateCircle(double radius, int sides)
         {
             // Look for a cached version of this circle
-            string circleKey = $"{radius}x{sides}"; // TODO: change to concatenation
+            string circleKey = $"{radius}x{sides}";
             if (circleCache.ContainsKey(circleKey))
             {
                 return circleCache[circleKey];
@@ -79,7 +80,7 @@ namespace Tools_XNA_dotNET_Framework
         private static List<Vector2> CreateArc(float radius, int sides, float startingAngle, float radians)
         {
             // Look for a cached version of this arc
-            string arcKey = $"{radius}x{sides}x{startingAngle}x{radians}"; // TODO: change to concatenation
+            string arcKey = $"{radius}x{sides}x{startingAngle}x{radians}";
             if (arcCache.ContainsKey(arcKey))
             {
                 return arcCache[arcKey];
@@ -114,8 +115,31 @@ namespace Tools_XNA_dotNET_Framework
             return points;
         }
 
+        /// <summary>
+        /// Transforms a rectangle and returns the corners coordinates in clockwise order
+        /// </summary>
+        /// <param name="rectangle"></param>
+        /// <param name="transform"></param>
+        /// <returns></returns>
+        private static Vector2[] TransformRectangle(Rectangle rectangle, Matrix transform)
+        {
+            // Get all four corners in local space
+            Vector2 leftTop = new Vector2(rectangle.Left, rectangle.Top);
+            Vector2 rightTop = new Vector2(rectangle.Right, rectangle.Top);
+            Vector2 leftBottom = new Vector2(rectangle.Left, rectangle.Bottom);
+            Vector2 rightBottom = new Vector2(rectangle.Right, rectangle.Bottom);
+
+            // Transform all four corners into work space
+            Vector2.Transform(ref leftTop, ref transform, out leftTop);
+            Vector2.Transform(ref rightTop, ref transform, out rightTop);
+            Vector2.Transform(ref leftBottom, ref transform, out leftBottom);
+            Vector2.Transform(ref rightBottom, ref transform, out rightBottom);
+
+            return new[] {leftTop, rightTop, rightBottom, leftBottom};
+        }
+
         #endregion
-            
+
 
         #region DrawPoints
 
@@ -267,7 +291,6 @@ namespace Tools_XNA_dotNET_Framework
         public static void DrawRectangle(this SpriteBatch spriteBatch, Rectangle rect, Color color, float thickness = 1.0f)
         {
 
-            // TODO: Handle rotations
             // Top
             DrawLine(spriteBatch, new Vector2(rect.X, rect.Y), new Vector2(rect.Right, rect.Y), color,
                 thickness); 
@@ -291,12 +314,26 @@ namespace Tools_XNA_dotNET_Framework
         /// <param name="size">The size of the rectangle</param>
         /// <param name="color">The color to draw the rectangle in</param>
         /// <param name="thickness">The thickness of the line</param>
-        public static void DrawRectangle(this SpriteBatch spriteBatch, Vector2 location, Vector2 size, Color color,
-            float thickness = 1.0f)
+        public static void DrawRectangle(this SpriteBatch spriteBatch, Vector2 location, Vector2 size, Color color, float thickness = 1.0f)
         {
             DrawRectangle(spriteBatch, new Rectangle((int) location.X, (int) location.Y, (int) size.X, (int) size.Y),
                 color, thickness);
         }
+
+        public static void DrawRectangle(this SpriteBatch spriteBatch, Rectangle rectangle, Matrix transform, Color color, float thickness = 1.0f)
+        {
+            List<Vector2> corners = TransformRectangle(rectangle, transform).ToList();
+            corners.Add(corners[0]);
+
+            DrawPoints(spriteBatch, Vector2.Zero, corners.ToList(), color, thickness);
+        }
+
+        public static void DrawRectangle(this SpriteBatch spriteBatch, Rectangle rectangle, float rotation, Color color, float thickness = 1.0f)
+        {
+            Matrix rotationMatrix = Matrix.CreateFromAxisAngle(Vector3.UnitZ, rotation);
+            DrawRectangle(spriteBatch, rectangle, rotationMatrix, color, thickness);
+        }
+
 
         #endregion
 

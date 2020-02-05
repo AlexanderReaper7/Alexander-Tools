@@ -37,7 +37,7 @@ namespace Tools_XNA_dotNET_Framework
         /// </summary>
         /// <param name="texture">The texture associated with the object</param>
         /// <param name="position">The position of the object in world space</param>
-        public CollidableObject(Texture2D texture, Vector2 position) : this(texture, position, new Rectangle(0,0,texture.Width, texture.Height), Vector2.Zero, 0.0f)
+        public CollidableObject(Texture2D texture, Vector2 position) : this(texture, position, new Rectangle(0, 0, texture.Width, texture.Height), Vector2.Zero, 0.0f)
         {
         }
 
@@ -68,8 +68,8 @@ namespace Tools_XNA_dotNET_Framework
         /// </summary>
         public float Rotation
         {
-            get { return rotation; }
-            set { rotation = value % MathHelper.TwoPi; }
+            get => rotation;
+            set => rotation = value % MathHelper.TwoPi;
         }
 
 
@@ -86,12 +86,12 @@ namespace Tools_XNA_dotNET_Framework
         /// <summary>
         ///     An axis aligned rectangle which fully contains an arbitrarily transformed axis aligned rectangle.
         /// </summary>
-        public Rectangle BoundingRectangle => CalculateBoundingRectangle(new Rectangle(0,0, SourceRectangle.Width, SourceRectangle.Height), Transform);
+        public Rectangle BoundingRectangle => CalculateBoundingRectangle(new Rectangle(0, 0, SourceRectangle.Width, SourceRectangle.Height), Transform);
 
         /// <summary>
         ///     A simple rectangle based on position, origin and source that does´nt rotate.
         /// </summary>
-        public Rectangle SimpleRectangle => new Rectangle((int)(Position.X - Origin.X), (int)(Position.Y - Origin.Y), SourceRectangle.Width, SourceRectangle.Height);
+        public Rectangle SimpleRectangle => new Rectangle((int) (Position.X - Origin.X), (int) (Position.Y - Origin.Y), SourceRectangle.Width, SourceRectangle.Height);
 
         /// <summary>
         ///     Detects a pixel level collision between this and an other CollidableObject.
@@ -101,15 +101,11 @@ namespace Tools_XNA_dotNET_Framework
         public bool IsColliding(CollidableObject collidable)
         {
             // If rectangle of objects intersects
-             if (BoundingRectangle.Intersects(collidable.BoundingRectangle))
-            {
+            if (BoundingRectangle.Intersects(collidable.BoundingRectangle))
                 // And any of the pixels of objects intersect
                 if (IntersectPixels(Transform, SourceRectangle, TextureData, collidable.Transform, collidable.SourceRectangle, collidable.TextureData))
-                { 
                     // Then return true
                     return true;
-                }
-            }
             // Else return false 
             return false;
         }
@@ -123,7 +119,7 @@ namespace Tools_XNA_dotNET_Framework
         {
             // Create a temporary array to store the pixel data in
             Color[] array = new Color[texture.Width * texture.Height];
-            
+
             Texture = texture;
             // Create a new origin 
             Origin = new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2);
@@ -135,14 +131,10 @@ namespace Tools_XNA_dotNET_Framework
             // Convert 1D array into 2D array
             // For each row of pixels in this texture
             for (int y = 0; y < texture.Height; y++)
-            {
                 // For each pixel in this row
-                for (int x = 0; x < texture.Width; x++)
-                {
-                    // Set color of this coordinate from array into TextureData
-                    TextureData[x, y] = array[x + y * texture.Width];
-                }
-            }
+            for (int x = 0; x < texture.Width; x++)
+                // Set color of this coordinate from array into TextureData
+                TextureData[x, y] = array[x + y * texture.Width];
         }
 
         /// <summary>
@@ -153,7 +145,7 @@ namespace Tools_XNA_dotNET_Framework
         public void LoadTexture(Texture2D texture, Vector2 origin)
         {
             LoadTexture(texture);
-            this.Origin = origin;
+            Origin = origin;
         }
 
         /// <summary>
@@ -175,15 +167,11 @@ namespace Tools_XNA_dotNET_Framework
         {
             // If rectangle of objects intersects
             if (collidableObjectA.BoundingRectangle.Intersects(collidableObjectB.BoundingRectangle))
-            {
                 // And any of the pixels of objects intersect
                 if (IntersectPixels(collidableObjectA.Transform, collidableObjectA.SourceRectangle, collidableObjectA.TextureData,
-                    collidableObjectB.Transform, collidableObjectB.SourceRectangle, collidableObjectB.TextureData))
-                {
+                        collidableObjectB.Transform, collidableObjectB.SourceRectangle, collidableObjectB.TextureData))
                     // Then return true
                     return true;
-                }
-            }
             // Else return false 
             return false;
         }
@@ -228,8 +216,8 @@ namespace Tools_XNA_dotNET_Framework
                 for (int xA = sourceA.X; xA < sourceA.Width + sourceA.X; xA++)
                 {
                     // Round to the nearest pixel
-                    int xB = (int)Math.Round(posInB.X) + sourceB.X;
-                    int yB = (int)Math.Round(posInB.Y) + sourceB.Y;
+                    int xB = (int) Math.Round(posInB.X) + sourceB.X;
+                    int yB = (int) Math.Round(posInB.Y) + sourceB.Y;
 
                     // If the pixel lies within the bounds of B
                     if (sourceB.X <= xB && xB < sourceB.Width + sourceB.X && sourceB.Y <= yB && yB < sourceB.Height + sourceB.Y)
@@ -238,13 +226,11 @@ namespace Tools_XNA_dotNET_Framework
                         // and wrap coordinates to prevent index going out of range
                         Color colorA = dataA[xA % dataA.GetLength(0), yA % dataA.GetLength(1)];
                         Color colorB = dataB[xB % dataB.GetLength(0), yB % dataB.GetLength(1)];
-                        
+
                         // If both pixels are not completely transparent,
                         if (colorA.A != 0 && colorB.A != 0)
-                        {
                             // then an intersection has been found
                             return true;
-                        }
                     }
 
                     // Move to the next pixel in the row
@@ -285,7 +271,7 @@ namespace Tools_XNA_dotNET_Framework
             Vector2 max = Vector2.Max(Vector2.Max(leftTop, rightTop), Vector2.Max(leftBottom, rightBottom));
 
             // Return that as a rectangle
-            return new Rectangle((int) min.X, (int) min.Y, (int) ( max.X - min.X ), (int) ( max.Y - min.Y ));
+            return new Rectangle((int) min.X, (int) min.Y, (int) (max.X - min.X), (int) (max.Y - min.Y));
         }
     }
 }
