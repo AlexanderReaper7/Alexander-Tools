@@ -72,7 +72,7 @@ namespace Tools_XNA_dotNET_Framework
         public Camera2D(Game game)
         {
             _game = game;
-            Origin = new Vector2(WindowSize.Width / 2.0f, WindowSize.Height / 2.0f);
+            Origin = Vector2.Zero;
             Zoom = 1f;
             Position = Vector2.Zero;
             Rotation = 0f;
@@ -124,7 +124,7 @@ namespace Tools_XNA_dotNET_Framework
         /// Returns the view matrix
         /// </summary>
         /// <returns></returns>
-        public Matrix GetViewMatrix()
+        public Matrix GetViewMatrix() // TODO: cache result?
         {
                 return Matrix.CreateTranslation(new Vector3(-Position, 0.0f)) *
                        Matrix.CreateTranslation(new Vector3(-Origin, 0.0f)) *
