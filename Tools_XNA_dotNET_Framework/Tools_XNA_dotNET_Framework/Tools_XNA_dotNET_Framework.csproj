@@ -59,6 +59,7 @@
     <Compile Include="DynamicCompiling.cs" />
     <Compile Include="ExtendedSpriteBatch.cs" />
     <Compile Include="MathHelperExtensions.cs" />
+    <Compile Include="NetworkHelper.cs" />
     <Compile Include="Primitives2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleCollisionHelper.cs" />
